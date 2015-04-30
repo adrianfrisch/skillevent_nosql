@@ -37,14 +37,14 @@ public class DomainExporter {
         ingredients.add(new Zutat("Basilikum", 1.0, false));
         ingredients.add(new Zutat("Oregano", 1.0, false));
 
-        List<Pizza> pizzas = new ArrayList<>();
-        pizzas.add(new Pizza("Schinken"));
-        pizzas.add(new Pizza("Salami"));
-        pizzas.add(new Pizza("4 Stragioni"));
-        pizzas.add(new Pizza("4 Formaggi"));
+        List<Pizza> pizzen = new ArrayList<>();
+        pizzen.add(new Pizza("Schinken").addIngredientById("Schinken"));
+        pizzen.add(new Pizza("Salami").addIngredientById("Salami"));
+//        pizzen.add(new Pizza("4 Stragioni"));
+//        pizzen.add(new Pizza("4 Formaggi"));
 
-        List<Rezept> recipies = new ArrayList<>();
-        recipies.add(new Rezept("schinken").addIngredient("schinken").addIngredient("gouda"));
+//        List<Rezept> recipies = new ArrayList<>();
+//        recipies.add(new Rezept("SchinkenPizze").addIngredient("Schinken").addIngredient("Gouda"));
 
         List<Kunde> customers = new ArrayList<>();
         int i = 0;
@@ -59,6 +59,7 @@ public class DomainExporter {
 
         exportToJsonFile(ingredients, "ingredients.json");
         exportToJsonFile(customers, "customers.json");
+        exportToJsonFile(pizzen, "pizzen.json");
 
     }
 
