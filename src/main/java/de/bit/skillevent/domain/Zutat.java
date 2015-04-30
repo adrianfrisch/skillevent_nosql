@@ -5,6 +5,9 @@ public class Zutat  extends BasisDomainObject{
 	private double preis;
 	private boolean vegetarisch;
 
+	public Zutat() {
+	}
+
 	public Zutat(String name, double preis, boolean vegetarisch) {
 		this.id = name.toLowerCase();
 		this.name = name;
