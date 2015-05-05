@@ -2,17 +2,17 @@ package de.bit.skillevent.domain;
 
 import java.util.List;
 
-public class Kunde  extends BasisDomainObject{
+public class Kunde extends BasisDomainObject {
 	private String nachName;
 	private String vorName;
 	private boolean vegetarier;
 	private List<Bestellung> bestellungen;
-	
+
 	public Kunde(String vorName, String nachName, boolean vegetarier) {
-		this.vorName=vorName;
-		this.nachName=nachName;
-		this.vegetarier=vegetarier;
-		this.id = vorName.toLowerCase()+nachName.toLowerCase();
+		this.vorName = vorName;
+		this.nachName = nachName;
+		this.vegetarier = vegetarier;
+		this.id = vorName.toLowerCase() + nachName.toLowerCase();
 	}
 
 	public String getNachName() {
@@ -45,5 +45,10 @@ public class Kunde  extends BasisDomainObject{
 
 	public void setBestellungen(List<Bestellung> bestellungen) {
 		this.bestellungen = bestellungen;
+	}
+
+	public String toString() {
+		return "Kunde [vorName:" + vorName + ";nachName:" + nachName
+				+ ";vegetarier:" + vegetarier + "]";
 	}
 }
