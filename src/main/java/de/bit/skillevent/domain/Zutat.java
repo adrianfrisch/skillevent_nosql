@@ -1,5 +1,7 @@
 package de.bit.skillevent.domain;
 
+import com.google.common.base.Preconditions;
+
 public class Zutat  extends BasisDomainObject{
 	private String name;
 	private double preis;
@@ -8,8 +10,13 @@ public class Zutat  extends BasisDomainObject{
 	public Zutat() {
 	}
 
+	public Zutat(long id,String name, double preis, boolean vegetarisch) {
+		this(name,preis,vegetarisch);
+		this.id=id;
+	}
+
 	public Zutat(String name, double preis, boolean vegetarisch) {
-		this.id = name.toLowerCase();
+		Preconditions.checkNotNull(name);
 		this.name = name;
 		this.preis = preis;
 		this.vegetarisch = vegetarisch;

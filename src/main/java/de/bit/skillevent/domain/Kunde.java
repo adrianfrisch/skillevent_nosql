@@ -1,54 +1,69 @@
 package de.bit.skillevent.domain;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
+
 import java.util.List;
 
 public class Kunde extends BasisDomainObject {
-	private String nachName;
-	private String vorName;
-	private boolean vegetarier;
-	private List<Bestellung> bestellungen;
 
-	public Kunde(String vorName, String nachName, boolean vegetarier) {
-		this.vorName = vorName;
-		this.nachName = nachName;
-		this.vegetarier = vegetarier;
-		this.id = vorName.toLowerCase() + nachName.toLowerCase();
-	}
+    private String nachName;
 
-	public String getNachName() {
-		return nachName;
-	}
+    private String vorName;
 
-	public void setNachName(String nachName) {
-		this.nachName = nachName;
-	}
+    private boolean vegetarier;
 
-	public String getVorName() {
-		return vorName;
-	}
+    private List<Bestellung> bestellungen;
 
-	public void setVorName(String vorName) {
-		this.vorName = vorName;
-	}
+    public Kunde() {
+    }
 
-	public boolean isVegetarier() {
-		return vegetarier;
-	}
+    public Kunde(long id, String vorName, String nachName, boolean vegetarier) {
+        this(vorName, nachName, vegetarier);
+        this.id = id;
+    }
 
-	public void setVegetarier(boolean vegetarier) {
-		this.vegetarier = vegetarier;
-	}
+    public Kunde(String vorName, String nachName, boolean vegetarier) {
+        Preconditions.checkArgument(vorName != null && nachName != null);
+        this.vorName = vorName;
+        this.nachName = nachName;
+        this.vegetarier = vegetarier;
+    }
 
-	public List<Bestellung> getBestellungen() {
-		return bestellungen;
-	}
+    public String getNachName() {
+        return nachName;
+    }
 
-	public void setBestellungen(List<Bestellung> bestellungen) {
-		this.bestellungen = bestellungen;
-	}
+    public void setNachName(String nachName) {
+        this.nachName = nachName;
+    }
 
-	public String toString() {
-		return "Kunde [vorName:" + vorName + ";nachName:" + nachName
-				+ ";vegetarier:" + vegetarier + "]";
-	}
+    public String getVorName() {
+        return vorName;
+    }
+
+    public void setVorName(String vorName) {
+        this.vorName = vorName;
+    }
+
+    public boolean isVegetarier() {
+        return vegetarier;
+    }
+
+    public void setVegetarier(boolean vegetarier) {
+        this.vegetarier = vegetarier;
+    }
+
+    public List<Bestellung> getBestellungen() {
+        return bestellungen;
+    }
+
+    public void setBestellungen(List<Bestellung> bestellungen) {
+        this.bestellungen = bestellungen;
+    }
+
+    public String toString() {
+        return MoreObjects.toStringHelper(this.getClass()).add("vorname", vorName).
+                add("nachName", nachName).add("vegetarier", vegetarier).toString();
+    }
 }

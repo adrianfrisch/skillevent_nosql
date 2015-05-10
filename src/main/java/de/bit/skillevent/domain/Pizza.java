@@ -1,5 +1,7 @@
 package de.bit.skillevent.domain;
 
+import com.google.common.base.Preconditions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +11,17 @@ public class Pizza extends BasisDomainObject {
 
     private List<Zutat> zutaten = new ArrayList<>();
 
-    public Pizza(String name) {
-        this.name = name;
-        this.id = name.toLowerCase();
+    public Pizza() {
     }
 
-    public Pizza addIngredientById(String id) {
-        zutaten.add(new Zutat().withId(id));
-        return this;
+    public Pizza(long id, String name) {
+        this(name);
+        this.id = id;
+    }
+
+    public Pizza(String name) {
+        Preconditions.checkNotNull(name);
+        this.name = name;
     }
 
     public String getName() {
