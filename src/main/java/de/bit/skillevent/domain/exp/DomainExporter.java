@@ -1,9 +1,6 @@
 package de.bit.skillevent.domain.exp;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import de.bit.skillevent.domain.*;
-import org.fluttercode.datafactory.impl.DataFactory;
+import static de.bit.skillevent.domain.exp.DomainExporter.ZUTATEN.*;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -14,9 +11,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fluttercode.datafactory.impl.DataFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import de.bit.skillevent.domain.*;
+
 public class DomainExporter {
 
-    public static final int VEG_PROB = 30;
+    public enum ZUTATEN {
+        SALAMI, SCHINKEN, PILZE, PEPPERONIWURST, MOZZERELLA, PROVOLONE, GOUDA, EDAMER, PARMESAN, BASILIKUM, OREGANO
+    };
+
+    public static final int     VEG_PROB = 30;
 
     private static ObjectWriter objectWriter;
 
@@ -25,26 +32,26 @@ public class DomainExporter {
         DataFactory dataFactory = new DataFactory();
 
         List<Zutat> ingredients = new ArrayList<>();
-        ingredients.add(new Zutat("Salami", 1.0, false));
-        ingredients.add(new Zutat("Pepperoniwurst", 1.0, false));
-        ingredients.add(new Zutat("Schinken", 1.0, false));
-        ingredients.add(new Zutat("Pilze", 1.0, false));
-        ingredients.add(new Zutat("Mozzarella", 1.0, false));
-        ingredients.add(new Zutat("Provolone", 1.0, false));
-        ingredients.add(new Zutat("Gouda", 1.0, false));
-        ingredients.add(new Zutat("Edamer", 1.0, false));
-        ingredients.add(new Zutat("Parmesan", 1.0, false));
-        ingredients.add(new Zutat("Basilikum", 1.0, false));
-        ingredients.add(new Zutat("Oregano", 1.0, false));
+        ingredients.add(new Zutat(SALAMI.toString(), "Salami", 1.0, false));
+        ingredients.add(new Zutat(PEPPERONIWURST.toString(), "Pepperoniwurst", 1.0, false));
+        ingredients.add(new Zutat(SCHINKEN.toString(), "Schinken", 1.0, false));
+        ingredients.add(new Zutat(PILZE.toString(), "Pilze", 1.0, false));
+        ingredients.add(new Zutat(MOZZERELLA.toString(), "Mozzarella", 1.0, false));
+        ingredients.add(new Zutat(PROVOLONE.toString(), "Provolone", 1.0, false));
+        ingredients.add(new Zutat(GOUDA.toString(), "Gouda", 1.0, false));
+        ingredients.add(new Zutat(EDAMER.toString(), "Edamer", 1.0, false));
+        ingredients.add(new Zutat(PARMESAN.toString(), "Parmesan", 1.0, false));
+        ingredients.add(new Zutat(BASILIKUM.toString(), "Basilikum", 1.0, false));
+        ingredients.add(new Zutat(OREGANO.toString(), "Oregano", 1.0, false));
 
         List<Pizza> pizzen = new ArrayList<>();
-        pizzen.add(new Pizza("Schinken").addIngredientById("Schinken"));
-        pizzen.add(new Pizza("Salami").addIngredientById("Salami"));
-//        pizzen.add(new Pizza("4 Stragioni"));
-//        pizzen.add(new Pizza("4 Formaggi"));
+        pizzen.add(new PizzaBuilder(new Pizza("1", "Schinken")).withZutat(SCHINKEN).build());
+        pizzen.add(new PizzaBuilder(new Pizza("2", "Salami")).withZutat(SALAMI).build());
+        pizzen.add(new PizzaBuilder(new Pizza("3", "4 Stragioni")).withZutat(EDAMER).build());
+        pizzen.add(new PizzaBuilder(new Pizza("4", "4 Formaggi")).withZutat(EDAMER).withZutat(GOUDA).withZutat(PARMESAN).build());
 
-//        List<Rezept> recipies = new ArrayList<>();
-//        recipies.add(new Rezept("SchinkenPizze").addIngredient("Schinken").addIngredient("Gouda"));
+        List<Rezept> recipes = new ArrayList<>();
+        recipes.add(new Rezept("SchinkenPizze").addIngredient("Schinken").addIngredient("Gouda"));
 
         List<Kunde> customers = new ArrayList<>();
         int i = 0;
@@ -75,4 +82,28 @@ public class DomainExporter {
             writer.write(baos.toString(StandardCharsets.UTF_8.name()));
         }
     }
+
+    private static class PizzaBuilder {
+
+        private Pizza pizza;
+
+        public PizzaBuilder(Pizza pizza) {
+            this.pizza = pizza;
+        }
+
+        public PizzaBuilder withZutat(Zutat z) {
+            pizza.getZutaten().add(new Zutat(z.getOId()));
+            return this;
+        }
+
+        public PizzaBuilder withZutat(ZUTATEN zutatEnum) {
+            pizza.getZutaten().add(new Zutat(zutatEnum.toString()));
+            return this;
+        }
+
+        public Pizza build() {
+            return pizza;
+        }
+    }
+
 }
