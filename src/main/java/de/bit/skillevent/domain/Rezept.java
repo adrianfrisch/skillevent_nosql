@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Rezept extends BasisDomainObject {
 
-    private String pizzaId;
+    private String       pizzaId;
 
     private List<String> zutatIds = new ArrayList<>();
 
