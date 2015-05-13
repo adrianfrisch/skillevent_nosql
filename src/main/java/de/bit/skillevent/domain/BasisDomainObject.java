@@ -1,12 +1,18 @@
 package de.bit.skillevent.domain;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
+
 public class BasisDomainObject {
 
-    @org.springframework.data.neo4j.annotation.GraphId
-    protected Long id;
+    @GraphId
+    protected Long   id;
 
-    public <T extends BasisDomainObject> T withId(Long id){
-        this.id = id;
+    @Indexed(unique = true, failOnDuplicate = true, level = Indexed.Level.INSTANCE)
+    protected String oId;
+
+    public <T extends BasisDomainObject> T withId(String oId) {
+        this.oId = oId;
         return (T) this;
     }
 
@@ -16,6 +22,14 @@ public class BasisDomainObject {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOId() {
+        return oId;
+    }
+
+    public void setOId(String oId) {
+        this.oId = oId;
     }
 
     @Override
@@ -29,12 +43,12 @@ public class BasisDomainObject {
 
         BasisDomainObject that = (BasisDomainObject) o;
 
-        return !(id != null ? !id.equals(that.id) : that.id != null);
+        return !(oId != null ? !oId.equals(that.oId) : that.oId != null);
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return oId != null ? oId.hashCode() : 0;
     }
 }
