@@ -1,22 +1,25 @@
 package de.bit.skillevent.domain;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
+@NodeEntity
 public class Pizza extends BasisDomainObject {
 
-    private String name;
+    private String     name;
 
-    private List<Zutat> zutaten = new ArrayList<>();
+    private Set<Zutat> zutaten = Sets.newHashSet();
 
     public Pizza() {
     }
 
-    public Pizza(long id, String name) {
+    public Pizza(String oId, String name) {
         this(name);
-        this.id = id;
+        Preconditions.checkNotNull(oId);
+        this.oId = oId;
     }
 
     public Pizza(String name) {
@@ -32,11 +35,11 @@ public class Pizza extends BasisDomainObject {
         this.name = name;
     }
 
-    public List<Zutat> getZutaten() {
+    public Set<Zutat> getZutaten() {
         return zutaten;
     }
 
-    public void setZutaten(List<Zutat> zutaten) {
+    public void setZutaten(Set<Zutat> zutaten) {
         this.zutaten = zutaten;
     }
 }

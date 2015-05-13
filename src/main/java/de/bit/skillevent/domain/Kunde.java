@@ -7,20 +7,23 @@ import java.util.List;
 
 public class Kunde extends BasisDomainObject {
 
-    private String nachName;
+    private String           nachName;
 
-    private String vorName;
+    private String           vorName;
 
-    private boolean vegetarier;
+    private boolean          vegetarier;
 
     private List<Bestellung> bestellungen;
+
+    private String           oId;
 
     public Kunde() {
     }
 
-    public Kunde(long id, String vorName, String nachName, boolean vegetarier) {
+    public Kunde(String oId, String vorName, String nachName, boolean vegetarier) {
         this(vorName, nachName, vegetarier);
-        this.id = id;
+        Preconditions.checkNotNull(oId);
+        this.oId = oId;
     }
 
     public Kunde(String vorName, String nachName, boolean vegetarier) {
@@ -63,7 +66,7 @@ public class Kunde extends BasisDomainObject {
     }
 
     public String toString() {
-        return MoreObjects.toStringHelper(this.getClass()).add("vorname", vorName).
-                add("nachName", nachName).add("vegetarier", vegetarier).toString();
+        return MoreObjects.toStringHelper(this.getClass()).add("vorname", vorName).add("nachName", nachName).add("vegetarier", vegetarier)
+                .toString();
     }
 }
