@@ -1,12 +1,23 @@
 package de.bit.skillevent.domain;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public class Bestellung extends BasisDomainObject {
-    private Date        bestellDatum;
-    private double      gesamtPreis;
-    private List<Pizza> bestelltePizzen;
+    private Date              bestellDatum;
+    private double            gesamtPreis;
+    private Collection<Pizza> bestelltePizzen;
+    private Kunde             besteller;
+
+    Bestellung() {
+    }
+
+    public Bestellung(Kunde besteller, double gesamtPreis) {
+        this.besteller = besteller;
+        bestellDatum = new Date();
+        this.oId = besteller.toString() + bestellDatum.toString();
+        this.gesamtPreis = gesamtPreis;
+    }
 
     public Date getBestellDatum() {
         return bestellDatum;
@@ -24,11 +35,19 @@ public class Bestellung extends BasisDomainObject {
         this.gesamtPreis = gesamtPreis;
     }
 
-    public List<Pizza> getBestelltePizzen() {
+    public Collection<Pizza> getBestelltePizzen() {
         return bestelltePizzen;
     }
 
-    public void setBestelltePizzen(List<Pizza> bestelltePizzen) {
+    public void setBestelltePizzen(Collection<Pizza> bestelltePizzen) {
         this.bestelltePizzen = bestelltePizzen;
+    }
+
+    public Kunde getBesteller() {
+        return besteller;
+    }
+
+    public void setBesteller(Kunde besteller) {
+        this.besteller = besteller;
     }
 }
