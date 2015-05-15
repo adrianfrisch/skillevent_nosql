@@ -9,7 +9,7 @@ public class Zutat extends BasisDomainObject {
     private double  preis;
     private boolean vegetarisch;
 
-    public Zutat() {
+    Zutat() {
     }
 
     public Zutat(String oId, String name, double preis, boolean vegetarisch) {

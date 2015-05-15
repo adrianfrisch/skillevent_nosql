@@ -13,7 +13,7 @@ public class Pizza extends BasisDomainObject {
 
     private Set<Zutat> zutaten = Sets.newHashSet();
 
-    public Pizza() {
+    Pizza() {
     }
 
     public Pizza(String oId, String name) {

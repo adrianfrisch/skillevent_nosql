@@ -2,32 +2,28 @@ package de.bit.skillevent.domain;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import java.util.List;
+import java.util.Set;
 
+@NodeEntity
 public class Kunde extends BasisDomainObject {
 
-    private String           nachName;
+    private String          nachName;
 
-    private String           vorName;
+    private String          vorName;
 
-    private boolean          vegetarier;
+    private boolean         vegetarier;
 
-    private List<Bestellung> bestellungen;
+    private Set<Bestellung> bestellungen = Sets.newHashSet();
 
-    private String           oId;
-
-    public Kunde() {
+    Kunde() {
     }
 
     public Kunde(String oId, String vorName, String nachName, boolean vegetarier) {
-        this(vorName, nachName, vegetarier);
-        Preconditions.checkNotNull(oId);
+        Preconditions.checkArgument(vorName != null && nachName != null && oId != null);
         this.oId = oId;
-    }
-
-    public Kunde(String vorName, String nachName, boolean vegetarier) {
-        Preconditions.checkArgument(vorName != null && nachName != null);
         this.vorName = vorName;
         this.nachName = nachName;
         this.vegetarier = vegetarier;
@@ -57,11 +53,11 @@ public class Kunde extends BasisDomainObject {
         this.vegetarier = vegetarier;
     }
 
-    public List<Bestellung> getBestellungen() {
+    public Set<Bestellung> getBestellungen() {
         return bestellungen;
     }
 
-    public void setBestellungen(List<Bestellung> bestellungen) {
+    public void setBestellungen(Set<Bestellung> bestellungen) {
         this.bestellungen = bestellungen;
     }
 
